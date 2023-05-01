@@ -4,6 +4,7 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper";
 import { useState } from "react";
 import '../homeStyle.css';
+import { Link } from "react-router-dom";
 
 const HomeSlider = ({ datas }) => {
 
@@ -28,7 +29,7 @@ const HomeSlider = ({ datas }) => {
         <div className="">
 
             <div className="backGroundImage  relative ">
-                    <img className="relative transition duration-700" src={`${datas[activeIndexNo]?.locationImage}`} alt="" />
+                <img className="relative transition duration-700" src={`${datas[activeIndexNo]?.locationImage}`} alt="" />
 
                 <div className="img-div absolute">
                 </div>
@@ -37,9 +38,9 @@ const HomeSlider = ({ datas }) => {
 
             <div className="content absolute top-36 left-0 grid grid-cols-2 gap-4">
                 <div className="info-section mt-16 ms-28 text-white">
-                   <h2 className="  text-5xl font-bold">{datas[activeIndexNo]?.location}</h2>
-                   <p className="mt-3"> {datas[activeIndexNo]?.roomDescription} {datas[activeIndexNo]?.roomDescription} </p>
-                   <button className="bg-red-200 text-black py-1 px-4 mt-4 rounded-md"> Booking </button>
+                    <h2 className="  text-5xl font-bold">{datas[activeIndexNo]?.title}</h2>
+                    <p className="my-3"> {datas[activeIndexNo]?.roomDescription} {datas[activeIndexNo]?.roomDescription} </p>
+                    <Link to={`bocking/${datas[activeIndexNo]?.id}`} className="bg-red-200 text-black py-1 px-4 rounded-md"> Booking </Link>
 
                 </div>
 
@@ -59,9 +60,34 @@ const HomeSlider = ({ datas }) => {
                             className="mySwiper"
                         >
                             {
-                                datas.map((d, index) => <SwiperSlide key={index} >
-                                    <img className=" w-60 h-60" src={d.locationImage} alt="" />
-                                </SwiperSlide>)
+                                datas.map((d, index) => {
+                                    return (
+                                        <SwiperSlide key={index} className="pb-6" >
+                                            {({ isActive }) => (
+                                                <div className="" style={{ border: `${isActive ? "1px solid red" : "none"}`, boxShadow: `${isActive ? "3px 5px 10px white" : "none"}` }}>
+                                                    <img className=" w-60 h-60" src={d.locationImage} alt="" />
+                                                </div>
+                                            )}
+                                        </SwiperSlide>
+                                    )
+
+
+
+                                    // ({ isActive }) => (
+                                    //     <div>
+                                    //         <SwiperSlide style={isActive && { border: '1px solid red' }}  key={index} >
+                                    //             <img    className=" w-60 h-60" src={d.locationImage} alt="" />
+                                    //             {/* <img className=" w-60 h-60" src={d.locationImage} alt="" /> */}
+                                    //         </SwiperSlide>
+                                    //     </div>
+                                    // )
+
+                                    //   return  <SwiperSlide key={index} >
+                                    //         <img className=" w-60 h-60" src={d.locationImage} alt="" />
+                                    //     </SwiperSlide>
+                                }
+
+                                )
                             }
                         </Swiper>
                     </div>
